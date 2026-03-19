@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>JD Extractor — Settings</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      color: #1e293b;
+      background: #f8fafc;
+      padding: 40px 0;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Header ── */
+    header {
+      margin-bottom: 32px;
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    header p {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Form elements ── */
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 7px;
+      font-size: 13px;
+      font-family: 'Courier New', monospace;
+      color: #1e293b;
+      background: #f8fafc;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    input[type="password"]:focus,
+    input[type="text"]:focus {
+      border-color: #6366f1;
+      background: #fff;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 320px;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 7px;
+      font-size: 12px;
+      font-family: 'Courier New', monospace;
+      color: #1e293b;
+      background: #f8fafc;
+      resize: vertical;
+      line-height: 1.6;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    textarea:not(:disabled):focus {
+      border-color: #6366f1;
+      background: #fff;
+    }
+
+    textarea:disabled {
+      background: #f1f5f9;
+      color: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    /* ── Button row ── */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      align-items: center;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-primary {
+      background: #6366f1;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #4f46e5; }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
+    .btn-secondary:hover { background: #e2e8f0; }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+    .btn-danger:hover { background: #fecaca; }
+
+    /* ── Lock toggle ── */
+    .lock-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .lock-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-weight: 600;
+    }
+
+    .lock-badge.locked {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .lock-badge.unlocked {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    /* ── Status toast ── */
+    #save-status {
+      font-size: 12px;
+      margin-left: 6px;
+    }
+
+    #save-status.success { color: #16a34a; }
+    #save-status.error   { color: #dc2626; }
+
+    /* ── API key row ── */
+    .key-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .key-input-row input {
+      flex: 1;
+    }
+
+    .toggle-vis-btn {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+      padding: 0 12px;
+      border-radius: 7px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .toggle-vis-btn:hover { background: #e2e8f0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>JD Extractor Settings</h1>
+      <p>Configure your Claude API key and extraction prompt.</p>
+    </header>
+
+    <!-- API Key -->
+    <div class="card">
+      <div class="card-title">API Key</div>
+      <div class="card-desc">
+        Your Anthropic API key. Stored locally in <code>chrome.storage.local</code> — never sent anywhere except directly to <code>api.anthropic.com</code>.
+      </div>
+      <label for="api-key-input">Claude API Key</label>
+      <div class="key-input-row">
+        <input type="password" id="api-key-input" placeholder="sk-ant-…" autocomplete="off" spellcheck="false" />
+        <button class="toggle-vis-btn" id="toggle-vis-btn">Show</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-primary" id="save-key-btn">Save Key</button>
+        <span id="save-key-status"></span>
+      </div>
+    </div>
+
+    <!-- Extraction Prompt -->
+    <div class="card">
+      <div class="card-title">Extraction Prompt</div>
+      <div class="card-desc">
+        The system prompt sent to Claude along with each job description.
+        Locked by default to prevent accidental edits. Use "Unlock to edit" to modify, then Save.
+      </div>
+      <div class="lock-row">
+        <label for="prompt-textarea" style="margin-bottom:0;">Prompt</label>
+        <span class="lock-badge locked" id="lock-badge">Locked</span>
+      </div>
+      <textarea id="prompt-textarea" disabled spellcheck="false"></textarea>
+      <div class="btn-row">
+        <button class="btn-secondary" id="toggle-lock-btn">Unlock to edit</button>
+        <button class="btn-primary" id="save-prompt-btn" disabled>Save Prompt</button>
+        <button class="btn-danger" id="reset-prompt-btn">Reset to Default</button>
+        <span id="save-prompt-status"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local config files (never commit API keys)
+*.local
+config.local.js
+
+# Node (only used for icon generation script)
+node_modules/
+npm-debug.log*
